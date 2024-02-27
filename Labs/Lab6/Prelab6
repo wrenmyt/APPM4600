@@ -1,0 +1,24 @@
+import numpy as np
+
+def f(x):
+    return np.cos(x)
+
+def forward_difference(f, s, h):
+    return (f(s+h)-f(s))/h
+
+def centered_difference(f, s, h):
+    return (f(s+h)-f(s-h))/(2*h)
+
+h_values = 0.01 * 2.**(-np.arange(0,10))
+s = np.pi/2
+
+forward_diff_approx = forward_difference(f, s, h_values)
+centered_diff_approx = centered_difference(f, s, h_values)
+
+for i in range(len(h_values)):
+    print(f"For h = {h_values[i]}:")
+    print(f"Forward Difference Approximation: {forward_diff_approx[i]}")
+    print(f"Centered Difference Approximation: {centered_diff_approx[i]}\n")
+
+
+
