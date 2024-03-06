@@ -1,0 +1,43 @@
+import numpy as np
+
+def vandermonde_matrix(x_values, degree):
+
+    n = len(x_values)
+    A = np.column_stack([x_values ** i for i in range(degree + 1)])
+    return A
+
+def interpolate_coefficients(x_values, y_values):
+    degree = len(x_values) - 1
+    A = vandermonde_matrix(x_values, degree)
+    coefficients = np.linalg.solve(A, y_values)
+    return coefficients
+
+def evaluate_polynomial(coefficients, x):
+
+    degree = len(coefficients) - 1
+    if isinstance(x, (float, int)):
+        x = np.array([x])
+    n = len(x)
+    A = np.column_stack([x ** i for i in range(degree + 1)])
+    y = np.dot(A, coefficients)
+    return y
+
+
+def f(x):
+    return 1/(1+(10*x)**2)
+
+N = 1000
+
+x_values = np.linspace(-1, 1, N)
+
+y_values = f(x_values)
+
+
+coefficients = interpolate_coefficients(x_values, y_values)
+
+evaluation_points = np.linspace(-1, 1, N)
+polynomial_values = evaluate_polynomial(coefficients, evaluation_points)
+
+
+print("Values of the polynomial at evaluation points:")
+print(polynomial_values)
