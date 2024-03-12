@@ -1,0 +1,35 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+
+def spline(x0, fx0, x1, fx1, a):
+  
+    m = (fx1 - fx0) / (x1 - x0)
+    
+    b = fx0 - m * x0
+
+    line = m * a + b
+    
+    return line
+
+#example 
+x0 = 1
+fx0 = 3
+x1 = 4
+fx1 = 6
+a = 2
+
+line = spline(x0, fx0, x1, fx1, a)
+print("Value of the line at alpha:", line)
+
+x_values = np.linspace(min(x0, x1) - 1, max(x0, x1) + 1, 100)
+y_values = (fx1 - fx0) / (x1 - x0) * (x_values - x0) + fx0
+
+plt.plot(x_values, y_values, label='Line')
+plt.scatter([x0, x1], [fx0, fx1], color='red', label='Points')
+plt.scatter(a, line, color='green', label='Point at alpha')
+
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.title('Linear spline passing through points and evaluated at a')
+plt.legend()
+plt.show()
